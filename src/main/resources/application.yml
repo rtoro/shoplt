@@ -25,8 +25,8 @@ spring:
     datasource:
         type: com.zaxxer.hikari.HikariDataSource
         url: jdbc:mysql://localhost:3306/shoplt?useUnicode=true&characterEncoding=utf8&useSSL=false
-        username: 
-        password: 
+        username: root
+        password: torobetancur123
     jpa:
         database-platform: org.hibernate.dialect.MySQL5InnoDBDialect
         database: MYSQL

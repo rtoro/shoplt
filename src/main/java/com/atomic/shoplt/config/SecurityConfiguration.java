@@ -1,8 +1,5 @@
 package com.atomic.shoplt.config;
 
-import com.atomic.shoplt.security.AjaxAuthenticationFailureHandler;
-import com.atomic.shoplt.security.AjaxAuthenticationSuccessHandler;
-import com.atomic.shoplt.security.AjaxLogoutSuccessHandler;
 import javax.annotation.PostConstruct;
 import org.springframework.beans.factory.BeanInitializationException;
 import org.springframework.context.annotation.Bean;
@@ -70,24 +67,6 @@ public class SecurityConfiguration extends WebSecurityConfigurerAdapter
 	public AuthenticationManager authenticationManagerBean() throws Exception
 	{
 		return super.authenticationManagerBean();
-	}
-
-	@Bean
-	public AjaxAuthenticationSuccessHandler ajaxAuthenticationSuccessHandler()
-	{
-		return new AjaxAuthenticationSuccessHandler();
-	}
-
-	@Bean
-	public AjaxAuthenticationFailureHandler ajaxAuthenticationFailureHandler()
-	{
-		return new AjaxAuthenticationFailureHandler();
-	}
-
-	@Bean
-	public AjaxLogoutSuccessHandler ajaxLogoutSuccessHandler()
-	{
-		return new AjaxLogoutSuccessHandler();
 	}
 
 	@Bean
