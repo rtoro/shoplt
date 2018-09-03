@@ -20,23 +20,17 @@ import javax.persistence.Table;
 @Entity
 @Table(name = "existance")
 public class Existance extends AbstractAuditingEntity implements Serializable
-{
+{	
 	@Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
-	
+
 	@ManyToOne(targetEntity = Item.class)
 	private Item item;
+	
+	@ManyToOne(targetEntity = Location.class)
+	private Location location;
 
-	public Long getId()
-	{
-		return id;
-	}
-
-	public void setId(Long id)
-	{
-		this.id = id;
-	}
 
 	public Item getItem()
 	{
@@ -46,6 +40,16 @@ public class Existance extends AbstractAuditingEntity implements Serializable
 	public void setItem(Item item)
 	{
 		this.item = item;
+	}
+
+	public Location getLocation()
+	{
+		return location;
+	}
+
+	public void setLocation(Location location)
+	{
+		this.location = location;
 	}
 	
 	
