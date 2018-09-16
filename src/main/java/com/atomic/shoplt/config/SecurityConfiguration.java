@@ -5,7 +5,6 @@ import org.springframework.beans.factory.BeanInitializationException;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.context.annotation.Import;
-import org.springframework.http.HttpMethod;
 import org.springframework.security.authentication.AuthenticationManager;
 import org.springframework.security.config.annotation.authentication.builders.AuthenticationManagerBuilder;
 import org.springframework.security.config.annotation.method.configuration.EnableGlobalMethodSecurity;
@@ -16,8 +15,8 @@ import org.springframework.security.config.annotation.web.configuration.WebSecur
 import org.springframework.security.core.userdetails.UserDetailsService;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.security.crypto.password.PasswordEncoder;
+import org.springframework.security.web.csrf.CookieCsrfTokenRepository;
 import org.springframework.security.web.util.matcher.AntPathRequestMatcher;
-import org.springframework.web.filter.CorsFilter;
 import org.zalando.problem.spring.web.advice.security.SecurityProblemSupport;
 
 @Configuration
@@ -33,17 +32,14 @@ public class SecurityConfiguration extends WebSecurityConfigurerAdapter
 
 	//private final RememberMeServices rememberMeServices;
 
-	private final CorsFilter corsFilter;
-
 	private final SecurityProblemSupport problemSupport;
 	
 	public SecurityConfiguration(AuthenticationManagerBuilder authenticationManagerBuilder, UserDetailsService userDetailsService,
-			 CorsFilter corsFilter, SecurityProblemSupport problemSupport)
+			SecurityProblemSupport problemSupport)
 	{
 		this.authenticationManagerBuilder = authenticationManagerBuilder;
 		this.userDetailsService = userDetailsService;
 		//this.rememberMeServices = rememberMeServices;
-		this.corsFilter = corsFilter;
 		this.problemSupport = problemSupport;
 	}
 
@@ -79,63 +75,15 @@ public class SecurityConfiguration extends WebSecurityConfigurerAdapter
 	public void configure(WebSecurity web) throws Exception
 	{
 		web.ignoring()
-				.antMatchers(HttpMethod.OPTIONS, "/**")
-				.antMatchers("/app/**/*.{js,html}")
-				.antMatchers("/i18n/**")
-				.antMatchers("/content/**")
-				.antMatchers("/swagger-ui/index.html")
-				.antMatchers("/test/**");
+				.antMatchers("/webfonts/**")
+				.antMatchers("/custom_css/**")
+				.antMatchers("/js/**")
+				.antMatchers("/css/**");
 	}
 
 	@Override
 	public void configure(HttpSecurity http) throws Exception
 	{
-		/*http
-			.csrf()
-				.csrfTokenRepository(CookieCsrfTokenRepository.withHttpOnlyFalse())
-			.and()
-				.addFilterBefore(corsFilter, CsrfFilter.class)
-				.exceptionHandling()
-				.authenticationEntryPoint(problemSupport)
-				.accessDeniedHandler(problemSupport)
-//				.and()
-//				.rememberMe()
-//				.rememberMeServices(rememberMeServices)
-//				.rememberMeParameter("remember-me")
-//				.key("rememberMe")			
-			.and()
-				.formLogin()
-				.loginProcessingUrl("/login")
-				.successHandler(ajaxAuthenticationSuccessHandler())
-				.failureHandler(ajaxAuthenticationFailureHandler())
-				.usernameParameter("username")
-				.passwordParameter("password")
-				.permitAll()
-			.and()
-				.logout()
-				.logoutUrl("/logout")
-				.logoutSuccessHandler(ajaxLogoutSuccessHandler())
-				.permitAll()
-			.and()
-				.headers()
-				.frameOptions()
-				.disable()
-			.and()
-				.authorizeRequests()
-				.anyRequest().authenticated()
-			.and()
-				.authorizeRequests()
-				.antMatchers("/").permitAll()
-				.antMatchers("/login").permitAll()
-				.antMatchers("/api/register").permitAll()
-				.antMatchers("/api/activate").permitAll()
-				.antMatchers("/api/authenticate").permitAll()
-				.antMatchers("/api/account/reset-password/init").permitAll()
-				.antMatchers("/api/account/reset-password/finish").permitAll()
-				.antMatchers("/api/**").authenticated()
-				.antMatchers("/websocket/**").hasAuthority(AuthoritiesConstants.USER)
-				.antMatchers("/management/**").hasAuthority(AuthoritiesConstants.ADMIN)
-				;*/
 		http.
 			authorizeRequests()
 				.antMatchers("/").permitAll()
@@ -144,13 +92,13 @@ public class SecurityConfiguration extends WebSecurityConfigurerAdapter
 				.antMatchers("/admin/**").hasAuthority("ADMIN").anyRequest()
 				.authenticated()
 			.and()
-				.csrf()
-					.disable()
+				.csrf().csrfTokenRepository(new CookieCsrfTokenRepository())
+			.and()
 			.formLogin()
 				.loginPage("/login")
 					.failureUrl("/login?error=true")
-					.defaultSuccessUrl("/admin/home")
-					.usernameParameter("email")
+					.defaultSuccessUrl("/home")
+					.usernameParameter("username")
 					.passwordParameter("password")
 			.and()
 				.logout()

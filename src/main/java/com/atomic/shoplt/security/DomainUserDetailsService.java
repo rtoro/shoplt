@@ -4,7 +4,6 @@ import com.atomic.shoplt.domain.User;
 import com.atomic.shoplt.repository.UserRepository;
 import java.util.*;
 import java.util.stream.Collectors;
-import org.hibernate.validator.internal.constraintvalidators.hv.EmailValidator;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.security.core.GrantedAuthority;
@@ -33,13 +32,6 @@ public class DomainUserDetailsService implements UserDetailsService {
     @Transactional
     public UserDetails loadUserByUsername(final String login) {
         log.debug("Authenticating {}", login);
-
-        if (new EmailValidator().isValid(login, null)) {
-            Optional<User> userByEmailFromDatabase = userRepository.findOneWithAuthoritiesByEmail(login);
-            return userByEmailFromDatabase.map(user -> createSpringSecurityUser(login, user))
-                .orElseThrow(() -> new UsernameNotFoundException("User with email " + login + " was not found in the database"));
-        }
-
         String lowercaseLogin = login.toLowerCase(Locale.ENGLISH);
         Optional<User> userByLoginFromDatabase = userRepository.findOneWithAuthoritiesByLogin(lowercaseLogin);
         return userByLoginFromDatabase.map(user -> createSpringSecurityUser(lowercaseLogin, user))

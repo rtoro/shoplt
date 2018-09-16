@@ -2,6 +2,7 @@ package com.atomic.shoplt.controllers;
 
 
 
+import java.security.Principal;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -33,6 +34,14 @@ public class MainController {
 	public ModelAndView login(){
 		ModelAndView modelAndView = new ModelAndView();
 		modelAndView.setViewName("login");
+		return modelAndView;
+	}
+	
+	@RequestMapping(value="/home")
+	public ModelAndView home(Principal principal)
+	{
+		ModelAndView modelAndView = new ModelAndView();
+		modelAndView.setViewName("home");
 		return modelAndView;
 	}
 

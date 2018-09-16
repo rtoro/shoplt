@@ -24,3 +24,7 @@
 /nbdist/
 /.nb-gradle/
 /logs
+/node_modules
+/src/main/resources/static/css
+/src/main/resources/static/js
+/src/main/resources/static/webfonts
