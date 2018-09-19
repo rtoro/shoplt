@@ -42,6 +42,7 @@ public class MainController {
 	{
 		ModelAndView modelAndView = new ModelAndView();
 		modelAndView.setViewName("home");
+		modelAndView.addObject("User", "Rodolfo");
 		return modelAndView;
 	}
 

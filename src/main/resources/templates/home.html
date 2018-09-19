@@ -1,15 +1,17 @@
 <!DOCTYPE html>
 <html xmlns="http://www.w3.org/1999/xhtml" xmlns:th="http://www.thymeleaf.org">
-<head th:replace="fragments/resource_fragment.html :: header">
-</head>
-<body>
-    <div class="container-fluid">
-        <div class="row">
+    <head th:replace="fragments/resource_fragment.html :: header">
+    </head>
+    <body>
+        <div class="container-fluid">
+            <div class="row">
 
-            <div th:replace="fragments/sidepanel_fragment.html :: sidepanel"></div>
-            <div th:replace="fragments/nav_fragment.html :: nav"></div>
-            <div>TODO write content</div>
+                <div th:replace="fragments/sidepanel_fragment.html :: sidepanel"></div>
+                <div th:replace="fragments/nav_fragment.html :: nav"></div>
+                <main role="main" class="col-md-9 ml-sm-auto col-lg-10 px-4">
+                    <p th:text="'Hello, ' + ${User} + '!'" />
+                </main>
+            </div>
         </div>
-    </div>
-</body>
+    </body>
 </html>
