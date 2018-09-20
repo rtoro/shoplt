@@ -39,11 +39,12 @@ spring:
     thymeleaf:
         mode: HTML
         cache: false
+output.ansi.enabled : DETECT
 logging:
     file: logs/shoplt.log
     pattern:
-        console: "\u001B[32m[%d{yyyy-MM-dd HH:mm:ss,SSS}]\u001B[35m[%-5level]\u001B[39m[%-20c{1}] %m%n"
-        file: "[%d{yyyy-MM-dd HH:mm:ss,SSS}][%-5level][%-20c{1}] %m%n"
+        console: "%clr([%d{yyyy-MM-dd HH:mm:ss,SSS}]){green} %highlight([%-5level]) %cyan([%-30c{1}]) - %m%n"
+        file: "[%d{yyyy-MM-dd HH:mm:ss,SSS}][%-5level][%-30c{1}] %m%n"
 
 # ===================================================================
 # To enable SSL, generate a certificate using:
