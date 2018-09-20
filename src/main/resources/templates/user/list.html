@@ -1,16 +1,29 @@
 <!DOCTYPE html>
-<!--
-To change this license header, choose License Headers in Project Properties.
-To change this template file, choose Tools | Templates
-and open the template in the editor.
--->
-<html>
-    <head>
-        <title>TODO supply a title</title>
-        <meta charset="UTF-8">
-        <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    </head>
-    <body>
-        <div>TODO write content</div>
-    </body>
+<html xmlns="http://www.w3.org/1999/xhtml" xmlns:th="http://www.thymeleaf.org">
+
+<head th:insert="fragments/resource_fragment.html :: header_user_datatable">
+</head>
+
+<body>
+    <div class="container-fluid">
+        <div class="row">
+            <div th:replace="fragments/nav_fragment.html :: nav"></div>
+            <div id="body" class="container">
+                <table id="usersTable" class="table">
+                    <thead class="thead-dark shadow">
+                        <tr>
+                            <th scope="col">#</th>
+                            <th scope="col">Login Name</th>
+                            <th scope="col">Nombre</th>
+                            <th scope="col">Apellido</th>
+                            <th scope="col">Email</th>
+                            <th scope="col">Activado</th>
+                        </tr>
+                    </thead>
+
+                </table>
+            </div>
+        </div>
+    </div>
+</body>
 </html>

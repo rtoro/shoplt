@@ -46,6 +46,7 @@ public class SecurityConfiguration extends WebSecurityConfigurerAdapter
 		web.ignoring()
 				.antMatchers("/webfonts/**")
 				.antMatchers("/custom_css/**")
+				.antMatchers("/custom_js/**")
 				.antMatchers("/js/**")
 				.antMatchers("/pass")
 				.antMatchers("/css/**");
