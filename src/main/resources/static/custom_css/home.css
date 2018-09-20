@@ -17,6 +17,10 @@
     overflow-y: auto; /* Scrollable contents if viewport is shorter than content. */
 }
 
-[role="main"] {
+#body {
     padding-top: 64px; /* Space for fixed navbar */
+}
+
+.w-200{
+    width: 200px;
 }

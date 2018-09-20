@@ -20,6 +20,7 @@
     "@fortawesome/fontawesome-free": "^5.3.1",
     "bootstrap": "^4.1.3",
     "jquery": "^3.3.1",
+    "npm": "^6.4.1",
     "popper.js": "^1.14.4",
     "sockjs-client": "^1.1.5",
     "stompjs": "^2.3.3"

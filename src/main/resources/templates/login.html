@@ -1,27 +1,31 @@
 <!DOCTYPE html>
 <html xmlns="http://www.w3.org/1999/xhtml" xmlns:th="http://www.thymeleaf.org">
-    <head>
-        <title>ShopLT</title>
-        <link href="css/bootstrap.min.css" rel="stylesheet"/>
-        <link href="custom_css/login.css" rel="stylesheet"/>
-        <script src="js/jquery.slim.min.js" type="text/javascript"></script>
-        <script src="js/bootstrap.min.js" type="text/javascript"></script>
-    </head>
-    <body class="text-center">
-        <form th:action="@{/login}" method="POST"  class="form-signin">
-            <!--img class="mb-4" src="../../assets/brand/bootstrap-solid.svg" alt="" width="72" height="72">-->
-            <h1 class="h3 mb-3 font-weight-normal">Please sign in</h1>
-            <label for="username" class="sr-only">Username</label>
-            <input type="text" id="username" name="username"  th:placeholder="Username" class="form-control"  required autofocus/>
-            <label for="password" class="sr-only">Password</label>
-            <input type="password" id="password" name="password" th:placeholder="Password" class="form-control" required/>
-            <div class="checkbox mb-3">
-                <label>
-                    <input type="checkbox" value="remember-me"> Remember me
-                </label>
-            </div>
-            <button class="btn btn-lg btn-primary btn-block" name="Submit" type="Submit">Sign in</button>
-            <p class="mt-5 mb-3 text-muted">&copy; 2017-2018</p>
-        </form>
-    </body>
+<head>
+    <title>ShopLT</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <link href="css/bootstrap.min.css" rel="stylesheet" />
+    <link href="custom_css/login.css" rel="stylesheet" />
+    <script src="js/jquery.slim.min.js" type="text/javascript"></script>
+    <script src="js/bootstrap.min.js" type="text/javascript"></script>
+</head>
+
+<body class="text-center">
+    <form th:action="@{/login}" method="POST" class="form-signin">
+        <!--img class="mb-4" src="../../assets/brand/bootstrap-solid.svg" alt="" width="72" height="72">-->
+        <h1 class="h3 mb-3 font-weight-normal">Please sign in</h1>
+        <label for="username" class="sr-only">Username</label>
+        <input type="text" id="username" name="username" th:placeholder="Username" class="form-control" required autofocus/>
+        <label for="password" class="sr-only">Password</label>
+        <input type="password" id="password" name="password" th:placeholder="Password" class="form-control" required/>
+        <div class="checkbox mb-3">
+            <label>
+                <input type="checkbox" value="remember-me"> Remember me
+            </label>
+        </div>
+        <button class="btn btn-lg btn-primary btn-block" name="Submit" type="Submit">Sign in</button>
+        <p class="mt-5 mb-3 text-muted">&copy; 2017-2018</p>
+    </form>
+</body>
+
 </html>
