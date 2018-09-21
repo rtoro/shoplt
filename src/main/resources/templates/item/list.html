@@ -1,0 +1,27 @@
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml" xmlns:th="http://www.thymeleaf.org">
+
+<head th:insert="fragments/resource_fragment.html :: header_item_datatable">
+</head>
+
+<body>
+    <div class="container-fluid">
+        <div class="row">
+            <div th:replace="fragments/nav_fragment.html :: nav"></div>
+            <div id="body" class="container">
+                <table id="usersTable" class="table">
+                    <thead class="thead-dark shadow">
+                        <tr>
+                            <th scope="col">#</th>
+                            <th scope="col">Nombre</th>
+                            <th scope="col">Codigo de Barra</th>
+                            <th scope="col">Precio</th>
+                            <th scope="col">Unidad</th>
+                        </tr>
+                    </thead>
+                </table>
+            </div>
+        </div>
+    </div>
+</body>
+</html>

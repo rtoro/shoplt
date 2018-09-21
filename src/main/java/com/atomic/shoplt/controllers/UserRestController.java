@@ -5,7 +5,7 @@
  */
 package com.atomic.shoplt.controllers;
 
-import com.atomic.shoplt.domain.User;
+import com.atomic.shoplt.domain.UserApp;
 import com.atomic.shoplt.repository.UserRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
@@ -26,7 +26,7 @@ public class UserRestController
 	private UserRepository userRepository;
 
 	@RequestMapping(value = "/list", method = RequestMethod.GET)
-	Page<User> employeesPageable(Pageable pageable) {
+	Page<UserApp> employeesPageable(Pageable pageable) {
 		return userRepository.findAll(pageable);
 	}
 

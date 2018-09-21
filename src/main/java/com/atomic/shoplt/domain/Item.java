@@ -35,14 +35,47 @@ public class Item extends AbstractAuditingEntity implements Serializable
 	@Column(name = "description", length = 50)
 	private String description;
 	
-	@Column(name = "bar_code")
-	private long barCode;
+	@Column(name = "bar_code", length = 200)
+	private String barCode;
 	
-	@Column(name = "price")
-	private float price;
+	@Column(name = "price_unit")
+	private float priceUnit;
+		
+	@Column(name = "unit")
+	private String unit;
 
 	@OneToMany(cascade = CascadeType.ALL, orphanRemoval = true, mappedBy = "item")
     private Set<Existance> existance = new HashSet<>();
+
+	public Long getId()
+	{
+		return id;
+	}
+
+	public void setId(Long id)
+	{
+		this.id = id;
+	}
+
+	public float getPriceUnit()
+	{
+		return priceUnit;
+	}
+
+	public void setPriceUnit(float priceUnit)
+	{
+		this.priceUnit = priceUnit;
+	}
+
+	public Set<Existance> getExistance()
+	{
+		return existance;
+	}
+
+	public void setExistance(Set<Existance> existance)
+	{
+		this.existance = existance;
+	}
 	
 	public String getName()
 	{
@@ -64,25 +97,24 @@ public class Item extends AbstractAuditingEntity implements Serializable
 		this.description = description;
 	}
 
-	public long getBarCode()
+	public String getBarCode()
 	{
 		return barCode;
 	}
 
-	public void setBarCode(long barCode)
+	public void setBarCode(String barCode)
 	{
 		this.barCode = barCode;
 	}
 
-	public float getPrice()
+	public String getUnit()
 	{
-		return price;
+		return unit;
 	}
 
-	public void setPrice(float price)
+	public void setUnit(String unit)
 	{
-		this.price = price;
+		this.unit = unit;
 	}
-	
 	
 }

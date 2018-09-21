@@ -19,8 +19,8 @@
                     Reportes
                 </a>
                 <div class="dropdown-menu" aria-labelledby="dropdown02">
-                    <a class="dropdown-item" href="">Articulos</a>
-                    <a class="dropdown-item" href="">Operaciones</a>
+                    <a th:href="@{/report/items}" class="dropdown-item">Articulos</a>
+                    <a th:href="@{/report/operations}" class="dropdown-item">Operaciones</a>
                 </div>
             </li>
             <li class="nav-item dropdown">
@@ -29,8 +29,8 @@
                     Administracion
                 </a>
                 <div class="dropdown-menu" aria-labelledby="dropdown03">
-                    <a class="dropdown-item" href="">Articulos</a>
-                    <a sec:authorize="hasRole('ROLE_ADMIN')" th:href="@{/users/list}" class="dropdown-item" >Usuarios</a>
+                    <a th:href="@{/item/list}" class="dropdown-item">Articulos</a>
+                    <a th:href="@{/users/list}" class="dropdown-item" sec:authorize="hasRole('ROLE_ADMIN')">Usuarios</a>
                 </div>
             </li>
         </ul>

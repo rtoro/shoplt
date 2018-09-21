@@ -20,7 +20,7 @@ import org.apache.commons.lang3.StringUtils;
  */
 @Entity
 @Table(name = "user")
-public class User extends AbstractAuditingEntity implements Serializable {
+public class UserApp extends AbstractAuditingEntity implements Serializable {
 
     private static final long serialVersionUID = 1L;
 
@@ -200,7 +200,7 @@ public class User extends AbstractAuditingEntity implements Serializable {
             return false;
         }
 
-        User user = (User) o;
+        UserApp user = (UserApp) o;
         return !(user.getId() == null || getId() == null) && Objects.equals(getId(), user.getId());
     }
 

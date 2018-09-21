@@ -1,16 +1,25 @@
 $(document).ready(function () {
-    var table = $('#usersTable').DataTable({
-        "serverSide": true,
-        "ajax": {
-            "url": "/rest/users/list",
+    $('#usersTable').DataTable({
+        processing: true,
+        serverSide: true,
+        ajax: {
+            url: "/rest/users/list",
+            dataFilter: function(data){
+                var json = jQuery.parseJSON( data );
+                json.recordsTotal = json.totalElements;
+                json.recordsFiltered = json.totalElements;
+                json.data = json.content;
+      
+                return JSON.stringify( json ); // return JSON string
+            }
         },
-        "columns": [
-            { "mData": "id" },
-            { "mData": "login" },
-            { "mData": "firstName" },
-            { "mData": "lastName" },
-            { "mData": "email" },
-            { "mData": "activated" }
+        columns: [
+            { data: "id" },
+            { data: "login" },
+            { data: "firstName" },
+            { data: "lastName" },
+            { data: "email" },
+            { data: "activated" }
         ]
     })
 });

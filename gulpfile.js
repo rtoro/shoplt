@@ -9,7 +9,7 @@ gulp.task('clean', function () {
 });
 
 gulp.task('build', function () {
-    gulp.src('./node_modules/jquery/dist/jquery.slim.min.js').pipe(gulp.dest('./src/main/resources/static/js'));
+    gulp.src('./node_modules/jquery/dist/jquery.min.js').pipe(gulp.dest('./src/main/resources/static/js'));
     gulp.src('./node_modules/stompjs/lib/stomp.min.js').pipe(gulp.dest('./src/main/resources/static/js'));
     gulp.src('./node_modules/sockjs-client/dist/sockjs.min.js').pipe(gulp.dest('./src/main/resources/static/js'));
     gulp.src('./node_modules/bootstrap/dist/css/bootstrap.min.css').pipe(gulp.dest('./src/main/resources/static/css'));

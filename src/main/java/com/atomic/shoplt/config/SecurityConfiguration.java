@@ -11,8 +11,6 @@ import org.springframework.security.config.annotation.web.configuration.WebSecur
 import org.springframework.security.core.userdetails.UserDetailsService;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.security.crypto.password.PasswordEncoder;
-import org.springframework.security.web.csrf.CookieCsrfTokenRepository;
-import org.springframework.security.web.util.matcher.AntPathRequestMatcher;
 
 @Configuration
 public class SecurityConfiguration extends WebSecurityConfigurerAdapter
@@ -57,7 +55,7 @@ public class SecurityConfiguration extends WebSecurityConfigurerAdapter
 	{
 		http.
 			authorizeRequests()
-				.antMatchers("/login").permitAll()
+				.antMatchers("/login*").permitAll()
 				.antMatchers("/user").authenticated()
 				.antMatchers("/user/list").hasAuthority("ADMIN")
 				.antMatchers("/user/remove").hasAuthority("ADMIN")
@@ -66,20 +64,25 @@ public class SecurityConfiguration extends WebSecurityConfigurerAdapter
 				.antMatchers("/item/remove").hasAuthority("ADMIN")
 				.anyRequest().authenticated()
 			.and()
-				.csrf().csrfTokenRepository(new CookieCsrfTokenRepository())
-			.and()
+				.csrf().disable()
 			.formLogin()
 				.loginPage("/login")
-					.failureUrl("/login?error=true")
-					.defaultSuccessUrl("/home")
-					.usernameParameter("username")
-					.passwordParameter("password")
+				.successForwardUrl("/")
+				.permitAll()
+			.and()
+				.rememberMe()
+					.tokenValiditySeconds(60 * 60 * 24 * 30) 
+					.rememberMeCookieName("TOKEN")
 			.and()
 				.logout()
-					.logoutRequestMatcher(new AntPathRequestMatcher("/logout"))
-						.logoutSuccessUrl("/login")
+					.deleteCookies("SIC_TOKEN","JSESSIONID")
+					.logoutSuccessUrl("/login?logout")
 			.and()
-				.exceptionHandling()
-					.accessDeniedPage("/access-denied");
+				.sessionManagement()
+					.sessionAuthenticationErrorUrl("/login?exception")				
+			.and()
+				.headers()
+					.frameOptions()
+					.sameOrigin();
 	}
 }

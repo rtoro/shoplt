@@ -1,6 +1,6 @@
 package com.atomic.shoplt.repository;
 
-import com.atomic.shoplt.domain.User;
+import com.atomic.shoplt.domain.UserApp;
 import java.time.Instant;
 import java.util.List;
 import java.util.Optional;
@@ -16,37 +16,37 @@ import org.springframework.stereotype.Repository;
  * Spring Data JPA repository for the User entity.
  */
 @Repository
-public interface UserRepository extends CrudRepository<User, Long>
+public interface UserRepository extends CrudRepository<UserApp, Long>
 {
 
 	String USERS_BY_LOGIN_CACHE = "usersByLogin";
 
 	String USERS_BY_EMAIL_CACHE = "usersByEmail";
 
-	Optional<User> findOneByActivationKey(String activationKey);
+	Optional<UserApp> findOneByActivationKey(String activationKey);
 
-	List<User> findAllByActivatedIsFalseAndCreatedDateBefore(Instant dateTime);
+	List<UserApp> findAllByActivatedIsFalseAndCreatedDateBefore(Instant dateTime);
 
-	Optional<User> findOneByResetKey(String resetKey);
+	Optional<UserApp> findOneByResetKey(String resetKey);
 
-	Optional<User> findOneByEmailIgnoreCase(String email);
+	Optional<UserApp> findOneByEmailIgnoreCase(String email);
 
-	Optional<User> findOneByLogin(String login);
+	Optional<UserApp> findOneByLogin(String login);
 
 	@EntityGraph(attributePaths = "authorities")
-	Optional<User> findOneWithAuthoritiesById(Long id);
+	Optional<UserApp> findOneWithAuthoritiesById(Long id);
 
 	@EntityGraph(attributePaths = "authorities")
 	@Cacheable(cacheNames = USERS_BY_LOGIN_CACHE)
-	Optional<User> findOneWithAuthoritiesByLogin(String login);
+	Optional<UserApp> findOneWithAuthoritiesByLogin(String login);
 
 	@EntityGraph(attributePaths = "authorities")
 	@Cacheable(cacheNames = USERS_BY_EMAIL_CACHE)
-	Optional<User> findOneWithAuthoritiesByEmail(String email);
+	Optional<UserApp> findOneWithAuthoritiesByEmail(String email);
 
-	Page<User> findAllByLoginNot(Pageable pageable, String login);
+	Page<UserApp> findAllByLoginNot(Pageable pageable, String login);
 
-	Iterable<User> findAll(Sort sort);
+	Iterable<UserApp> findAll(Sort sort);
 
-	Page<User> findAll(Pageable pageable);
+	Page<UserApp> findAll(Pageable pageable);
 }
