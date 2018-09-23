@@ -11,7 +11,6 @@ import com.atomic.shoplt.util.datatable.DataTablesRequest;
 import com.atomic.shoplt.util.datatable.DataTablesResponse;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
-import org.springframework.data.domain.PageRequest;
 import org.springframework.data.domain.Pageable;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -35,16 +34,15 @@ public class ItemRestController
 	{
 		return itemRepository.findAll(pageable);
 	}
-	
+
 	@RequestMapping(value = "/list", method = RequestMethod.POST)
 	public DataTablesResponse<Item> employeesPageable(@RequestBody DataTablesRequest dtRequest)
 	{
-		Pageable pageable = new PageRequest(0, 1);
 
+		
 		DataTablesResponse<Item> dtResponse = new DataTablesResponse<>(itemRepository.findAll(dtRequest));
 		dtResponse.setDraw(dtRequest.getDraw());
-		
-			
+
 		return dtResponse;
 	}
 

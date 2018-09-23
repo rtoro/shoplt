@@ -11,11 +11,11 @@ $(document).ready(function () {
             }
         },
         columns: [
-            { data: "id" },
-            { data: "name" },
-            { data: "barCode" },
-            { data: "priceUnit" },
-            { data: "unit" }
+            {data: "id",        name: "id",        searchable: false},
+            {data: "name",      name: "name",      searchable: true},
+            {data: "barCode",   name: "barCode",   searchable: true},
+            {data: "priceUnit", name: "priceUnit", searchable: false},
+            {data: "unit",      name: "unit",      searchable: false}
         ]
-    })
+    });
 });

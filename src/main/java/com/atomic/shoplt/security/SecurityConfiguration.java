@@ -1,4 +1,4 @@
-package com.atomic.shoplt.config;
+package com.atomic.shoplt.security;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Bean;
