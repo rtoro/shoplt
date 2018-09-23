@@ -8,19 +8,26 @@ package com.atomic.shoplt.repository;
 import com.atomic.shoplt.domain.Item;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
-import org.springframework.data.domain.Sort;
 import org.springframework.data.jpa.repository.EntityGraph;
-import org.springframework.data.repository.CrudRepository;
+import org.springframework.data.repository.PagingAndSortingRepository;
 
 /**
  *
  * @author rtoro
  */
-public interface ItemRepository extends CrudRepository<Item, Long>
+public interface ItemRepository extends PagingAndSortingRepository<Item, Long>
 {
-
-	Iterable<Item> findAll(Sort sort);
-
-	@EntityGraph(attributePaths = "existance")
-	Page<Item> findAll(Pageable pageable);
+	@EntityGraph(attributePaths = {"existance","unit"})
+	Page<Item> findByIdLikeAndNameLikeAndBarcodeLikeAndUnitLike(Integer id , String name, String barcode, Integer unit,Pageable pageable);
+	
+	@EntityGraph(attributePaths = {"existance","unit"})
+	Page<Item> findByNameLikeAndBarcodeLikeAndUnitLike(String name, String barcode, Integer unit,Pageable pageable);
+	
+	@EntityGraph(attributePaths = {"existance","unit"})
+	Page<Item> findByIdLikeAndNameLikeAndBarcodeLike(Integer id , String name, String barcode, Pageable pageable);
+	
+	@EntityGraph(attributePaths = {"existance","unit"})
+	Page<Item> findByNameLikeAndBarcodeLike(String name, String barcode,Pageable pageable);
+	
+//	List<String> findUnit();
 }

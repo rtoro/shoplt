@@ -11,9 +11,11 @@ import java.util.Set;
 import javax.persistence.CascadeType;
 import javax.persistence.Column;
 import javax.persistence.Entity;
+import javax.persistence.FetchType;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
+import javax.persistence.ManyToOne;
 import javax.persistence.OneToMany;
 import javax.persistence.Table;
 
@@ -36,15 +38,15 @@ public class Item extends AbstractAuditingEntity implements Serializable
 	private String description;
 	
 	@Column(name = "bar_code", length = 200)
-	private String barCode;
+	private String barcode;
 	
 	@Column(name = "price_unit")
-	private float priceUnit;
-		
-	@Column(name = "unit")
-	private String unit;
+	private float priceunit;
 
-	@OneToMany(cascade = CascadeType.ALL, orphanRemoval = true, mappedBy = "item")
+	@ManyToOne(targetEntity = Unit.class ,fetch = FetchType.LAZY)
+	private Unit unit;
+
+	@OneToMany(cascade = CascadeType.ALL, orphanRemoval = true, mappedBy = "item",fetch = FetchType.LAZY)
     private Set<Existance> existance = new HashSet<>();
 
 	public Long getId()
@@ -59,12 +61,12 @@ public class Item extends AbstractAuditingEntity implements Serializable
 
 	public float getPriceUnit()
 	{
-		return priceUnit;
+		return priceunit;
 	}
 
 	public void setPriceUnit(float priceUnit)
 	{
-		this.priceUnit = priceUnit;
+		this.priceunit = priceUnit;
 	}
 
 	public Set<Existance> getExistance()
@@ -99,20 +101,20 @@ public class Item extends AbstractAuditingEntity implements Serializable
 
 	public String getBarCode()
 	{
-		return barCode;
+		return barcode;
 	}
 
 	public void setBarCode(String barCode)
 	{
-		this.barCode = barCode;
+		this.barcode = barCode;
 	}
 
-	public String getUnit()
+	public Unit getUnit()
 	{
 		return unit;
 	}
 
-	public void setUnit(String unit)
+	public void setUnit(Unit unit)
 	{
 		this.unit = unit;
 	}

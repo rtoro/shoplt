@@ -17,15 +17,17 @@ package com.atomic.shoplt.util.datatable;
 
 import java.util.ArrayList;
 import java.util.Collections;
+import java.util.HashMap;
 import java.util.List;
-import org.springframework.data.domain.Pageable;
+import java.util.Map;
+import org.springframework.data.domain.PageRequest;
 import org.springframework.data.domain.Sort;
 import org.springframework.data.domain.Sort.Order;
 
 /**
  * @author Erik van Paassen
  */
-public class DataTablesRequest implements Pageable
+public class DataTablesRequest
 {
 
 	private int draw;
@@ -95,8 +97,6 @@ public class DataTablesRequest implements Pageable
 		this.order = order;
 	}
 
-	//<editor-fold defaultstate="collapsed" desc="Pageable impl">
-	@Override
 	public int getPageNumber()
 	{
 		if(start == 0)
@@ -109,19 +109,16 @@ public class DataTablesRequest implements Pageable
 		}
 	}
 
-	@Override
 	public int getPageSize()
 	{
 		return length;
 	}
+//
+//	public long getOffset()
+//	{
+//		return (long) getPageNumber() * (long) getPageSize();
+//	}
 
-	@Override
-	public long getOffset()
-	{
-		return (long) getPageNumber() * (long) getPageSize();
-	}
-
-	@Override
 	public Sort getSort()
 	{
 		List<Order> orders = new ArrayList<>();
@@ -129,32 +126,27 @@ public class DataTablesRequest implements Pageable
 		{
 			orders.add(new Order(Sort.Direction.valueOf(dataTablesOrder.getDir().name().toUpperCase()), columns.get(dataTablesOrder.getColumn()).getName()));
 		});
-		Sort sort= Sort.by(orders);
-		return sort;
+		return Sort.by(orders);
 	}
 
-	@Override
-	public Pageable next()
+	public Map<String, String> getFilters()
 	{
-		throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
+		Map<String, String> map = new HashMap<>();
+		columns.forEach(column ->
+		{
+			if(column.isSearchable())
+			{
+				if(!column.getSearch().getValue().isEmpty())
+				{
+					map.put(column.getName(), column.getSearch().getValue());
+				}
+			}
+		});
+		return map;
 	}
-
-	@Override
-	public Pageable previousOrFirst()
+	
+	public PageRequest getPageRequest()
 	{
-		throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
+		return  PageRequest.of(getPageNumber(), getPageSize(), getSort());
 	}
-
-	@Override
-	public Pageable first()
-	{
-		throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
-	}
-
-	@Override
-	public boolean hasPrevious()
-	{
-		throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
-	}
-	//</editor-fold>
 }

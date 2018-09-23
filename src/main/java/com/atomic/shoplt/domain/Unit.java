@@ -6,15 +6,11 @@
 package com.atomic.shoplt.domain;
 
 import java.io.Serializable;
-import java.util.HashSet;
-import java.util.Set;
-import javax.persistence.CascadeType;
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
-import javax.persistence.OneToMany;
 import javax.persistence.Table;
 
 /**
@@ -22,8 +18,8 @@ import javax.persistence.Table;
  * @author rodol
  */
 @Entity
-@Table(name = "location")
-public class Location implements Serializable
+@Table(name = "unit")
+public class Unit implements Serializable
 {
 	@Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
@@ -32,19 +28,6 @@ public class Location implements Serializable
 	@Column(name = "name", length = 50)
 	private String name;
 	
-	@OneToMany(cascade = CascadeType.ALL, orphanRemoval = true, mappedBy = "location")
-    private Set<Existance> existance = new HashSet<>();
-
-	public Set<Existance> getExistance()
-	{
-		return existance;
-	}
-
-	public void setExistance(Set<Existance> existance)
-	{
-		this.existance = existance;
-	}
-
 	public String getName()
 	{
 		return name;
