@@ -13,74 +13,87 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
-
 package com.atomic.shoplt.util.datatable;
 
+import java.util.ArrayList;
 import java.util.Collections;
 import java.util.List;
 import org.springframework.data.domain.Pageable;
 import org.springframework.data.domain.Sort;
+import org.springframework.data.domain.Sort.Order;
 
 /**
  * @author Erik van Paassen
  */
-public class DataTablesRequest implements Pageable{
+public class DataTablesRequest implements Pageable
+{
 
-    private int draw;
-    private int start;
-    private int length;
-    private DataTablesSearch search;
-    private List<DataTablesColumn> columns = Collections.emptyList();
-    private List<DataTablesOrder> order = Collections.emptyList();
+	private int draw;
+	private int start;
+	private int length;
+	private DataTablesSearch search;
+	private List<DataTablesColumn> columns = Collections.emptyList();
+	private List<DataTablesOrder> order = Collections.emptyList();
 
+	public int getDraw()
+	{
+		return draw;
+	}
 
-    public int getDraw() {
-        return draw;
-    }
+	public void setDraw(int draw)
+	{
+		this.draw = draw;
+	}
 
-    public void setDraw(int draw) {
-        this.draw = draw;
-    }
+	public int getStart()
+	{
+		return start;
+	}
 
-    public int getStart() {
-        return start;
-    }
+	public void setStart(int start)
+	{
+		this.start = start;
+	}
 
-    public void setStart(int start) {
-        this.start = start;
-    }
+	public int getLength()
+	{
+		return length;
+	}
 
-    public int getLength() {
-        return length;
-    }
+	public void setLength(int length)
+	{
+		this.length = length;
+	}
 
-    public void setLength(int length) {
-        this.length = length;
-    }
+	public DataTablesSearch getSearch()
+	{
+		return search;
+	}
 
-    public DataTablesSearch getSearch() {
-        return search;
-    }
+	public void setSearch(DataTablesSearch search)
+	{
+		this.search = search;
+	}
 
-    public void setSearch(DataTablesSearch search) {
-        this.search = search;
-    }
+	public List<DataTablesColumn> getColumns()
+	{
+		return columns;
+	}
 
-    public List<DataTablesColumn> getColumns() {
-        return columns;
-    }
+	public void setColumns(List<DataTablesColumn> columns)
+	{
+		this.columns = columns;
+	}
 
-    public void setColumns(List<DataTablesColumn> columns) {
-        this.columns = columns;
-    }
+	public List<DataTablesOrder> getOrder()
+	{
+		return order;
+	}
 
-    public List<DataTablesOrder> getOrder() {
-        return order;
-    }
-
-    public void setOrder(List<DataTablesOrder> order) {
-        this.order = order;
-    }
+	public void setOrder(List<DataTablesOrder> order)
+	{
+		this.order = order;
+	}
 
 	//<editor-fold defaultstate="collapsed" desc="Pageable impl">
 	@Override
@@ -92,46 +105,52 @@ public class DataTablesRequest implements Pageable{
 		}
 		else
 		{
-			return start/length;
+			return start / length;
 		}
 	}
-	
+
 	@Override
 	public int getPageSize()
 	{
 		return length;
 	}
-	
+
 	@Override
 	public long getOffset()
 	{
 		return (long) getPageNumber() * (long) getPageSize();
 	}
-	
+
 	@Override
 	public Sort getSort()
 	{
-		return Sort.unsorted();
+		List<Order> orders = new ArrayList<>();
+		order.forEach((dataTablesOrder) ->
+		{
+			orders.add(new Order(Sort.Direction.valueOf(dataTablesOrder.getDir().name()), columns.get(dataTablesOrder.getColumn()).getName()));
+		});
+		Sort sort= Sort.by(orders);
+		return sort;
 	}
-	
+
 	@Override
 	public Pageable next()
 	{
 		throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
 	}
-	
+
 	@Override
 	public Pageable previousOrFirst()
 	{
 		throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
 	}
-	
+
 	@Override
 	public Pageable first()
 	{
 		throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
 	}
-	
+
 	@Override
 	public boolean hasPrevious()
 	{

@@ -27,7 +27,7 @@ spring:
     jpa:
         show-sql: true
         hibernate.ddl-auto: update
-        database-platform: org.hibernate.dialect.MySQLDialect        
+        database-platform: org.hibernate.dialect.MySQL5Dialect        
         open-in-view: false
     mvc:
         favicon:
@@ -43,6 +43,7 @@ logging:
         file: "[%d{yyyy-MM-dd HH:mm:ss,SSS}][%-5level][%-30c{1}] %m%n"
 #    level:
 #        org.springframework: DEBUG
+#        org.hibernate: DEBUG
 
 # ===================================================================
 # To enable SSL, generate a certificate using:
