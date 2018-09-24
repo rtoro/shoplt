@@ -7,6 +7,7 @@ package com.atomic.shoplt.domain;
 
 import java.io.Serializable;
 import javax.persistence.Entity;
+import javax.persistence.FetchType;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
@@ -25,7 +26,7 @@ public class Existance extends AbstractAuditingEntity implements Serializable
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
 
-	@ManyToOne(targetEntity = Item.class)
+	@ManyToOne(targetEntity = Item.class, fetch=FetchType.LAZY)
 	private Item item;
 	
 	@ManyToOne(targetEntity = Location.class)

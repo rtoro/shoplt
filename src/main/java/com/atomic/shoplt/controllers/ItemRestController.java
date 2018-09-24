@@ -11,12 +11,10 @@ import com.atomic.shoplt.repository.ItemRepository;
 import com.atomic.shoplt.repository.UnitRepository;
 import com.atomic.shoplt.util.datatable.DataTablesRequest;
 import com.atomic.shoplt.util.datatable.DataTablesResponse;
-import java.lang.reflect.Method;
 import java.util.List;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
-import org.springframework.util.StringUtils;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
@@ -52,30 +50,38 @@ public class ItemRestController
 	@RequestMapping(value = "/list", method = RequestMethod.POST)
 	public DataTablesResponse<Item> employeesPageable(@RequestBody DataTablesRequest dtRequest)
 	{
-		StringBuilder queryMethod = new StringBuilder("");
-		if(!dtRequest.getFilters().isEmpty())
+		String id = dtRequest.getFilters().get("id");
+		String name = dtRequest.getFilters().get("name");
+		String barCode = dtRequest.getFilters().get("barCode");
+		String unit_id = dtRequest.getFilters().get("unit_id");
+		name = name == null ? "" : name;
+		barCode = barCode == null ? "" : barCode;
+
+		Page page = null;
+		if(id != null)
 		{
-			queryMethod.append("findBy");
-			dtRequest.getFilters().forEach((name, valueToSerch) ->
+			if(unit_id != null)
 			{
-				queryMethod.append(StringUtils.capitalize(name)).append("Like").append("And");
-			});
-			queryMethod.substring(0, queryMethod.length() - 3);
+				page = itemRepository.findByIdLikeAndNameContainingAndBarCodeContainingAndUnitLike(Long.valueOf(id), name, barCode, Integer.valueOf(unit_id), dtRequest.getPageRequest());
+			}
+			else
+			{
+				page = itemRepository.findByIdLikeAndNameContainingAndBarCodeContaining(Long.valueOf(id), name, barCode, dtRequest.getPageRequest());
+			}
 		}
 		else
 		{
-			queryMethod.append("findAll");
+			if(unit_id != null)
+			{
+				page = itemRepository.findByNameContainingAndBarCodeContainingAndUnitLike(name, barCode, Integer.valueOf(unit_id), dtRequest.getPageRequest());
+			}
+			else
+			{
+				page = itemRepository.findByNameContainingAndBarCodeContaining(name, barCode, dtRequest.getPageRequest());
+			}
 		}
-		try
-		{
-			Method method = itemRepository.getClass().getMethod(queryMethod.toString());
-		}
-		catch(SecurityException | NoSuchMethodException e)
-		{
 
-		}
-
-		DataTablesResponse<Item> dtResponse = new DataTablesResponse<>(itemRepository.findByNameLikeAndBarCodeLike("%%", "%%", dtRequest.getPageRequest()));
+		DataTablesResponse<Item> dtResponse = new DataTablesResponse<>(page);
 		dtResponse.setDraw(dtRequest.getDraw());
 
 		return dtResponse;

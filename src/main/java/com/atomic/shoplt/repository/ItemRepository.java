@@ -15,24 +15,24 @@ import org.springframework.data.repository.PagingAndSortingRepository;
  *
  * @author rtoro
  */
-public interface ItemRepository extends PagingAndSortingRepository<Item, Long>
+public interface ItemRepository extends PagingAndSortingRepository<Item, Long> 
 {
 
 	@Override
-	@EntityGraph(attributePaths = {"existance","unit"})
+	@EntityGraph(attributePaths = {"unit"})
 	public Page<Item> findAll(Pageable pageable);
 	
-	@EntityGraph(attributePaths = {"existance","unit"})
-	Page<Item> findByIdLikeAndNameLikeAndBarCodeLikeAndUnitLike(Integer id , String name, String barcode, Integer unit,Pageable pageable);
+	@EntityGraph(attributePaths = {"unit"})
+	Page<Item> findByIdLikeAndNameContainingAndBarCodeContainingAndUnitLike(Long id , String name, String barcode, Integer unit,Pageable pageable);
 	
-	@EntityGraph(attributePaths = {"existance","unit"})
-	Page<Item> findByNameLikeAndBarCodeLikeAndUnitLike(String name, String barcode, Integer unit,Pageable pageable);
+	@EntityGraph(attributePaths = {"unit"})
+	Page<Item> findByNameContainingAndBarCodeContainingAndUnitLike(String name, String barcode, Integer unit,Pageable pageable);
 	
-	@EntityGraph(attributePaths = {"existance","unit"})
-	Page<Item> findByIdLikeAndNameLikeAndBarCodeLike(Integer id , String name, String barcode, Pageable pageable);
+	@EntityGraph(attributePaths = {"unit"})
+	Page<Item> findByIdLikeAndNameContainingAndBarCodeContaining(Long id , String name, String barcode, Pageable pageable);
 	
-	@EntityGraph(attributePaths = {"existance","unit"})
-	Page<Item> findByNameLikeAndBarCodeLike(String name, String barcode,Pageable pageable);
-	
+	@EntityGraph(attributePaths = {"unit"})
+	Page<Item> findByNameContainingAndBarCodeContaining(String name, String barcode,Pageable pageable);
+
 //	List<String> findUnit();
 }

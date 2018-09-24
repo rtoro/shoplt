@@ -44,7 +44,7 @@ $(document).ready(function () {
             {data: "name"     , name: "name"      },
             {data: "barCode"  , name: "barCode"   },
             {data: "priceUnit", name: "priceUnit" },
-            {data: "unit.name", name: "unit"      }
+            {data: "unit.name", name: "unit_id"      }
         ]
     });
 
