@@ -22,9 +22,11 @@ $(document).ready(function () {
             }
         });
     });
+    
     var table = $('#usersTable').DataTable({
         processing: true,
         serverSide: true,
+        //searching: false,
         ajax: {
             url: "/rest/item/list",
             type: 'POST',
@@ -38,12 +40,24 @@ $(document).ready(function () {
             {targets: 2, orderable: false}
         ],
         columns: [
-            {data: "id",        name: "id",        },
-            {data: "name",      name: "name",      },
-            {data: "barCode",   name: "barCode",   },
-            {data: "priceUnit", name: "priceUnit", },
-            {data: "unit.name", name: "unit",      }
+            {data: "id"       , name: "id"        },
+            {data: "name"     , name: "name"      },
+            {data: "barCode"  , name: "barCode"   },
+            {data: "priceUnit", name: "priceUnit" },
+            {data: "unit.name", name: "unit"      }
         ]
+    });
+
+    table.columns().every(function () {
+        var that = this;
+
+        $('input', this.header()).on('keyup change', function () {
+            if (that.search() !== this.value) {
+                that
+                        .search(this.value)
+                        .draw();
+            }
+        });
     });
 
     /*table.columns().flatten().each(function (colIdx) {

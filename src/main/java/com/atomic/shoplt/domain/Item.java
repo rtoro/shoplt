@@ -38,10 +38,10 @@ public class Item extends AbstractAuditingEntity implements Serializable
 	private String description;
 	
 	@Column(name = "bar_code", length = 200)
-	private String barcode;
+	private String barCode;
 	
 	@Column(name = "price_unit")
-	private float priceunit;
+	private float priceUnit;
 
 	@ManyToOne(targetEntity = Unit.class ,fetch = FetchType.LAZY)
 	private Unit unit;
@@ -61,12 +61,12 @@ public class Item extends AbstractAuditingEntity implements Serializable
 
 	public float getPriceUnit()
 	{
-		return priceunit;
+		return priceUnit;
 	}
 
 	public void setPriceUnit(float priceUnit)
 	{
-		this.priceunit = priceUnit;
+		this.priceUnit = priceUnit;
 	}
 
 	public Set<Existance> getExistance()
@@ -101,12 +101,12 @@ public class Item extends AbstractAuditingEntity implements Serializable
 
 	public String getBarCode()
 	{
-		return barcode;
+		return barCode;
 	}
 
 	public void setBarCode(String barCode)
 	{
-		this.barcode = barCode;
+		this.barCode = barCode;
 	}
 
 	public Unit getUnit()

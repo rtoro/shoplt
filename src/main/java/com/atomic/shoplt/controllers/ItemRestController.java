@@ -11,10 +11,12 @@ import com.atomic.shoplt.repository.ItemRepository;
 import com.atomic.shoplt.repository.UnitRepository;
 import com.atomic.shoplt.util.datatable.DataTablesRequest;
 import com.atomic.shoplt.util.datatable.DataTablesResponse;
+import java.lang.reflect.Method;
 import java.util.List;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
+import org.springframework.util.StringUtils;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
@@ -31,7 +33,7 @@ public class ItemRestController
 
 	@Autowired
 	private UnitRepository unitRepository;
-	
+
 	@Autowired
 	private ItemRepository itemRepository;
 
@@ -40,7 +42,7 @@ public class ItemRestController
 	{
 		return itemRepository.findAll(pageable);
 	}
-	
+
 	@RequestMapping(value = "/units", method = RequestMethod.GET)
 	public List<Unit> units()
 	{
@@ -50,9 +52,30 @@ public class ItemRestController
 	@RequestMapping(value = "/list", method = RequestMethod.POST)
 	public DataTablesResponse<Item> employeesPageable(@RequestBody DataTablesRequest dtRequest)
 	{
-		dtRequest.getFilters();
-	
-		DataTablesResponse<Item> dtResponse = new DataTablesResponse<>(itemRepository.findByNameLikeAndBarcodeLike("%%", "%%", dtRequest.getPageRequest()));
+		StringBuilder queryMethod = new StringBuilder("");
+		if(!dtRequest.getFilters().isEmpty())
+		{
+			queryMethod.append("findBy");
+			dtRequest.getFilters().forEach((name, valueToSerch) ->
+			{
+				queryMethod.append(StringUtils.capitalize(name)).append("Like").append("And");
+			});
+			queryMethod.substring(0, queryMethod.length() - 3);
+		}
+		else
+		{
+			queryMethod.append("findAll");
+		}
+		try
+		{
+			Method method = itemRepository.getClass().getMethod(queryMethod.toString());
+		}
+		catch(SecurityException | NoSuchMethodException e)
+		{
+
+		}
+
+		DataTablesResponse<Item> dtResponse = new DataTablesResponse<>(itemRepository.findByNameLikeAndBarCodeLike("%%", "%%", dtRequest.getPageRequest()));
 		dtResponse.setDraw(dtRequest.getDraw());
 
 		return dtResponse;

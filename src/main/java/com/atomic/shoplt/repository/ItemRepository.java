@@ -17,17 +17,22 @@ import org.springframework.data.repository.PagingAndSortingRepository;
  */
 public interface ItemRepository extends PagingAndSortingRepository<Item, Long>
 {
+
+	@Override
 	@EntityGraph(attributePaths = {"existance","unit"})
-	Page<Item> findByIdLikeAndNameLikeAndBarcodeLikeAndUnitLike(Integer id , String name, String barcode, Integer unit,Pageable pageable);
+	public Page<Item> findAll(Pageable pageable);
 	
 	@EntityGraph(attributePaths = {"existance","unit"})
-	Page<Item> findByNameLikeAndBarcodeLikeAndUnitLike(String name, String barcode, Integer unit,Pageable pageable);
+	Page<Item> findByIdLikeAndNameLikeAndBarCodeLikeAndUnitLike(Integer id , String name, String barcode, Integer unit,Pageable pageable);
 	
 	@EntityGraph(attributePaths = {"existance","unit"})
-	Page<Item> findByIdLikeAndNameLikeAndBarcodeLike(Integer id , String name, String barcode, Pageable pageable);
+	Page<Item> findByNameLikeAndBarCodeLikeAndUnitLike(String name, String barcode, Integer unit,Pageable pageable);
 	
 	@EntityGraph(attributePaths = {"existance","unit"})
-	Page<Item> findByNameLikeAndBarcodeLike(String name, String barcode,Pageable pageable);
+	Page<Item> findByIdLikeAndNameLikeAndBarCodeLike(Integer id , String name, String barcode, Pageable pageable);
+	
+	@EntityGraph(attributePaths = {"existance","unit"})
+	Page<Item> findByNameLikeAndBarCodeLike(String name, String barcode,Pageable pageable);
 	
 //	List<String> findUnit();
 }
