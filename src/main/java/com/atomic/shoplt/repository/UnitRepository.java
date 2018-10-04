@@ -6,5 +6,5 @@ import org.springframework.data.repository.CrudRepository;
 /**
  * Spring Data JPA repository for the Authority entity.
  */
-public interface UnitRepository extends CrudRepository<Unit, String> {
+public interface UnitRepository extends CrudRepository<Unit, Long> {
 }

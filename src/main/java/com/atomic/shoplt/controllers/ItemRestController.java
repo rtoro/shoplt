@@ -53,16 +53,19 @@ public class ItemRestController
 		String id = dtRequest.getFilters().get("id");
 		String name = dtRequest.getFilters().get("name");
 		String barCode = dtRequest.getFilters().get("barCode");
-		String unit_id = dtRequest.getFilters().get("unit_id");
+		Unit unit = null;
+		if(dtRequest.getFilters().get("unit_id")!=null)
+			unit= unitRepository.findById(Long.valueOf(dtRequest.getFilters().get("unit_id"))).orElseGet(null);
+		
 		name = name == null ? "" : name;
 		barCode = barCode == null ? "" : barCode;
 
 		Page page = null;
 		if(id != null)
 		{
-			if(unit_id != null)
+			if(unit != null)
 			{
-				page = itemRepository.findByIdLikeAndNameContainingAndBarCodeContainingAndUnitLike(Long.valueOf(id), name, barCode, Integer.valueOf(unit_id), dtRequest.getPageRequest());
+				page = itemRepository.findByIdLikeAndNameContainingAndBarCodeContainingAndUnitLike(Long.valueOf(id), name, barCode, unit, dtRequest.getPageRequest());
 			}
 			else
 			{
@@ -71,9 +74,9 @@ public class ItemRestController
 		}
 		else
 		{
-			if(unit_id != null)
+			if(unit != null)
 			{
-				page = itemRepository.findByNameContainingAndBarCodeContainingAndUnitLike(name, barCode, Integer.valueOf(unit_id), dtRequest.getPageRequest());
+				page = itemRepository.findByNameContainingAndBarCodeContainingAndUnitLike(name, barCode, unit, dtRequest.getPageRequest());
 			}
 			else
 			{

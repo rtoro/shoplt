@@ -6,6 +6,7 @@
 package com.atomic.shoplt.repository;
 
 import com.atomic.shoplt.domain.Item;
+import com.atomic.shoplt.domain.Unit;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 import org.springframework.data.jpa.repository.EntityGraph;
@@ -23,10 +24,10 @@ public interface ItemRepository extends PagingAndSortingRepository<Item, Long>
 	public Page<Item> findAll(Pageable pageable);
 	
 	@EntityGraph(attributePaths = {"unit"})
-	Page<Item> findByIdLikeAndNameContainingAndBarCodeContainingAndUnitLike(Long id , String name, String barcode, Integer unit,Pageable pageable);
+	Page<Item> findByIdLikeAndNameContainingAndBarCodeContainingAndUnitLike(Long id , String name, String barcode, Unit unit,Pageable pageable);
 	
 	@EntityGraph(attributePaths = {"unit"})
-	Page<Item> findByNameContainingAndBarCodeContainingAndUnitLike(String name, String barcode, Integer unit,Pageable pageable);
+	Page<Item> findByNameContainingAndBarCodeContainingAndUnitLike(String name, String barcode, Unit unit,Pageable pageable);
 	
 	@EntityGraph(attributePaths = {"unit"})
 	Page<Item> findByIdLikeAndNameContainingAndBarCodeContaining(Long id , String name, String barcode, Pageable pageable);
